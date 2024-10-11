@@ -4,10 +4,15 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
-1. Install dependencies
+1. Install dependencies inside the react native frontend
 
    ```bash
-   npm install
+   yarn install
+   ```
+   We use libraries  
+     
+   ```bash
+   yarn add react-native-gesture-handler react-native-reanimated
    ```
 
 2. Start the app
