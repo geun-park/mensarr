@@ -76,7 +76,7 @@ if not exists:
         gid INT REFERENCES groups(id) ON DELETE CASCADE ON UPDATE CASCADE, 
         location_x DOUBLE PRECISION NOT NULL,
         location_y DOUBLE PRECISION NOT NULL,
-        joinable BOOLEAN DEFAULT FALSE,
+        joinable int  DEFAULT 0,
         mensa_id INT REFERENCES mensa(id) ON DELETE CASCADE ON UPDATE CASCADE,
         PRIMARY KEY (gid) 
     )
@@ -86,8 +86,8 @@ if not exists:
         (0, 1.0, 1.0, 0),
     ])
 
-    cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id, joinable) VALUES (%s, %s, %s, %s,%s) ON CONFLICT DO NOTHING", [
-        (1, 1.0, 1.0, 0, True),
+    cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id, joinable) VALUES (%s, %s, %s, %s,%d) ON CONFLICT DO NOTHING", [
+        (1, 1.0, 1.0, 0, 1),
     ])
 
 
