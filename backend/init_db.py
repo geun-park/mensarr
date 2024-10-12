@@ -17,8 +17,8 @@ CREATE TABLE groups (
 
 # Insert initial groups data
 groups = [
-    (1, "test 1"),
-    (2, "test 2"),
+    (0, "test 1"),
+    (1, "test 2"),
 ]
 
 cursor.executemany("INSERT INTO groups (id, title) VALUES (%s, %s) ON CONFLICT DO NOTHING", groups)
@@ -39,14 +39,14 @@ CREATE TABLE names_groups (
 """)
 
 cursor.executemany("INSERT INTO names (id, title) VALUES (%s, %s) ON CONFLICT DO NOTHING", [
-    (1, "ryo"),
-    (2, "jonas"),
+    (0, "ryo"),
+    (1, "jonas"),
 ])
 
 cursor.executemany("INSERT INTO names_groups (name_id, group_id) VALUES (%s, %s) ON CONFLICT DO NOTHING", [
+    (0, 0),
     (1, 1),
-    (2, 2),
-    (1, 2),
+    (0, 1),
 ])
 
 cursor.execute("""
