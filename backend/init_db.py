@@ -55,6 +55,9 @@ CREATE TABLE mensa (
     name VARCHAR(255) NOT NULL
 )
 """)
+cursor.executemany("INSERT INTO mensa (id, name) VALUES (%s, %s) ON CONFLICT DO NOTHING", [
+    (0, "POLY"),
+])
 
 cursor.execute("""
 CREATE TABLE locations (
