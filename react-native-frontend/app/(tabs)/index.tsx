@@ -1,30 +1,89 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MapPolyterrase from '@/components/MapPolyterrase';
 import SideButton from '@/components/SideButton'
+import { Stack } from 'expo-router';
+import MensaMenu from '../../components/mensapage/MensaMenu';
+import Polymensa from '../../components/mensapage/Polymensa';
 
-const App = () => (
-  <GestureHandlerRootView style={{flex: 1}}>
+const HomeStack = createNativeStackNavigator();
 
-  </GestureHandlerRootView>
-);
-
-export default function Tab() {
+function ObereUZH() {
   return (
-    <View style={{flex:1}}>
-      <MapPolyterrase/>
-      <SideButton>
-      </SideButton>
-
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Welcome to Obere UZH!</Text>
     </View>
-    
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-// });
+function UntereUZH() {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Welcome to Untere UZH!</Text>
+    </View>
+  );
+}
+
+function Polysnack() {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Welcome to Polysnack!</Text>
+    </View>
+  );
+}
+
+function Foodlab() {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Welcome to Foodlab!</Text>
+    </View>
+  );
+}
+
+function Tannenbar() {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Welcome to Tannenbar!</Text>
+    </View>
+  );
+}
+
+function ZweisteinBqm() {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Welcome to Zweistein/Bqm!</Text>
+    </View>
+  );
+}
+
+
+
+
+export default function Tab() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="MensaMenu" component={MensaMenu} />
+        <HomeStack.Screen name="Polymensa" component={Polymensa} />
+        <HomeStack.Screen name="ObereUZH" component={ObereUZH} />
+        <HomeStack.Screen name="UntereUZH" component={UntereUZH} />
+        <HomeStack.Screen name="Polysnack" component={Polysnack} />
+        <HomeStack.Screen name="Foodlab" component={Foodlab} />
+        <HomeStack.Screen name="Tannenbar" component={Tannenbar} />
+        <HomeStack.Screen name="ZweisteinBqm" component={ZweisteinBqm} />
+      
+    </HomeStack.Navigator>
+  );
+}
+const styles = StyleSheet.create({
+  
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});

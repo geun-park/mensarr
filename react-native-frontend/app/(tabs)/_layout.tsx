@@ -15,8 +15,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="groups"
         options={{
-            headerShown: false,
-          title: 'Groups',
+
+          title: 'Manage your Groups',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="group" color={color} />,
         }}
       />
