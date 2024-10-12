@@ -14,9 +14,6 @@ SELECT EXISTS (
 )
 """)
 exists = cursor.fetchone()[0]
-if exists:
-    cursor.execute("""SELECT setval('table_name_column_name_seq', COALESCE((SELECT MAX(column_name) FROM table_name), 1), false);
-    """)
 
 
 if not exists:
@@ -33,8 +30,8 @@ if not exists:
 
     # Insert initial groups data
     groups = [
-        (0, "test 1"),
-        (1, "test 2"),
+        (69, "test 1"),
+        (70, "test 2"),
     ]
 
     cursor.executemany("INSERT INTO groups (id, title) VALUES (%s, %s) ON CONFLICT DO NOTHING", groups)
@@ -55,14 +52,14 @@ if not exists:
     """)
 
     cursor.executemany("INSERT INTO names (id, title) VALUES (%s, %s) ON CONFLICT DO NOTHING", [
-        (0, "ryo"),
-        (1, "jonas"),
+        (69, "ryo"),
+        (70, "jonas"),
     ])
 
     cursor.executemany("INSERT INTO names_groups (name_id, group_id) VALUES (%s, %s) ON CONFLICT DO NOTHING", [
-        (0, 0),
-        (1, 1),
-        (0, 1),
+        (69, 69),
+        (70, 70),
+        (69, 70),
     ])
 
     cursor.execute("""
@@ -72,7 +69,7 @@ if not exists:
     )
     """)
     cursor.executemany("INSERT INTO mensa (id, name) VALUES (%s, %s) ON CONFLICT DO NOTHING", [
-        (0, "POLY"),
+        (69, "POLY"),
     ])
 
     cursor.execute("""
@@ -87,11 +84,11 @@ if not exists:
     """)
 
     cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING", [
-        (0, 1.0, 1.0, 0),
+        (69, 1.0, 1.0, 69),
     ])
 
     cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id, joinable) VALUES (%s, %s, %s, %s,%s) ON CONFLICT DO NOTHING", [
-        (1, 1.0, 1.0, 0, 1),
+        (70, 1.0, 1.0, 69, 1),
     ])
 
 
