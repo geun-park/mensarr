@@ -74,7 +74,7 @@ if not exists:
     """)
 
     cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING", [
-        (0, 1.0, 1.0, 0, "POLY"),
+        (0, 1.0, 1.0,"POLY"),
     ])
 
 
