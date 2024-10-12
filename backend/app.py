@@ -10,21 +10,6 @@ CORS(app)
 conn = psycopg2.connect(os.getenv("DATABASE_URL"))
 cursor = conn.cursor()
 
-
-# @app.route("/api/init/", methods=["POST"])
-# def initialize():
-#     if not conn or not cursor:
-#         return jsonify({"error": "Database connection not established"}), 500
-#     try:
-#         content = request.json
-#         cursor.execute("INSERT INTO names (id, title) VALUES (%s, %s)", (content["personalId"], content["name"]))
-#         conn.commit()
-#         return jsonify({"message": "Initialization successful"})
-#     except Exception as e:
-#         print(f"Error initializing data: {e}")
-#         conn.rollback()
-#         return jsonify({"error": "Error initializing data"  }), 500
-
 @app.route("/api/groupAndMemberList/<int:id>", methods=["GET"])
 def getGroup(id):
     if not conn or not cursor:
@@ -63,14 +48,15 @@ def getGroup(id):
                     "members": []
                 }
             groups_dict[group_id]["members"].append({
-            "member_id": group[2],
-            "member_name": group[3]
+                "member_id": group[2],
+                "member_name": group[3]
             })
-        #convert groups_dict to a list
+        # Convert groups_dict to a list
         groups_dict = [group for group_id, group in groups_dict.items()]
         return jsonify(groups_dict)
     except Exception as e:
         print(f"Error fetching group: {e}")
+        conn.rollback()
         return jsonify({"error": "Error fetching group"}), 500
 
 @app.route("/api/getMembersOfGroup/<int:id>", methods=["GET"])
@@ -96,7 +82,8 @@ def getMembers(id):
         return jsonify(members)
     except Exception as e:
         print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
+        conn.rollback()
+        return jsonify({"error": "Error fetching group"}), 500
 
 @app.route("/api/getIdFromName/<string:s>", methods=["GET"])
 def getId(s):
@@ -113,7 +100,8 @@ def getId(s):
         return jsonify(name)
     except Exception as e:
         print(f"Error fetching Id: {e}")
-        return jsonify({"error": "Error fetching Id,"  }), 500
+        conn.rollback()
+        return jsonify({"error": "Error fetching Id"}), 500
     
 @app.route("/api/createGroup/", methods=["POST"])
 def createGroup():
@@ -129,7 +117,7 @@ def createGroup():
     except Exception as e:
         print(f"Error creating group: {e}")
         conn.rollback()
-        return jsonify({"error": "Error creating group"  }), 500
+        return jsonify({"error": "Error creating group"}), 500
 
 @app.route("/api/addToGroup/<int:id>/", methods=["POST"])
 def joinGroup(id):
@@ -143,7 +131,7 @@ def joinGroup(id):
     except Exception as e:
         print(f"Error joining group: {e}")
         conn.rollback()
-        return jsonify({"error": "Error joining group"  }), 500
+        return jsonify({"error": "Error joining group"}), 500
 
 @app.route("/api/getGroupTable/<string:mensaName>/<int:groupid>", methods=["GET"])
 def getLocationGroup(groupid, mensaName):
@@ -155,15 +143,16 @@ def getLocationGroup(groupid, mensaName):
         if mensaid is None:
             return jsonify({"error": "Mensa not found"}), 404
         mensaid = mensaid[0]
-        cursor.execute("""SELECT locations.location_x, locations.location_y FROM locations where gid = %s AND mensa_id = %s""", (groupid, mensaid,))
+        cursor.execute("""SELECT locations.location_x, locations.location_y, locations.time FROM locations where gid = %s AND mensa_id = %s""", (groupid, mensaid,))
         location = cursor.fetchone()
         if location is None:
             return jsonify([])
-        locations = {"location_x": location[0], "location_y": location[1]}
+        locations = {"location_x": location[0], "location_y": location[1], "time": location[2]}
         return jsonify(locations)
     except Exception as e:
         print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
+        conn.rollback()
+        return jsonify({"error": "Error fetching group"}), 500
     
 @app.route("/api/getOpenTables/<string:mensaName>", methods=["GET"])
 def getLocationAlone(mensaName):
@@ -175,13 +164,14 @@ def getLocationAlone(mensaName):
         if mensaid is None:
             return jsonify({"error": "Mensa not found"}), 404
         mensaid = mensaid[0]
-        cursor.execute("""SELECT locations.location_x, locations.location_y FROM locations where locations.joinable = 1 AND locations.mensa_id = %s""", (mensaid,))
+        cursor.execute("""SELECT locations.location_x, locations.location_y, locations.time FROM locations where locations.joinable = 1 AND locations.mensa_id = %s""", (mensaid,))
         locations = cursor.fetchall()
-        locations = [{"location_x": location[0], "location_y": location[1]} for location in locations]
+        locations = [{"location_x": location[0], "location_y": location[1], "time": location[2]} for location in locations]
         return jsonify(locations)
     except Exception as e:
         print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
+        conn.rollback()
+        return jsonify({"error": "Error fetching group"}), 500
 
 # do get getGroupTable first to check if location exists
 @app.route("/api/setLocationGroup/<string:mensaName>/<int:groupid>", methods=["POST"])
@@ -196,13 +186,13 @@ def setLocationGroup(groupid, mensaName):
             return jsonify({"error": "Mensa not found"}), 404
         mensaid = mensaid[0]
         content = request.get_json()
-        cursor.execute("""INSERT INTO locations (gid, location_x, location_y, joinable, mensa_id) values (%s, %s, %s, %s, %s) """, (groupid, content["location_x"], content["location_y"], content["joinable"],mensaid,))
+        cursor.execute("""INSERT INTO locations (gid, location_x, location_y, joinable, mensa_id) values (%s, %s, %s, %s, %s) """, (groupid, content["location_x"], content["location_y"], content["joinable"], mensaid,))
         conn.commit()
         return jsonify({"message": "Location set successful"})
     except Exception as e:
-        print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
-    
+        print(f"Error setting location: {e}")
+        conn.rollback()
+        return jsonify({"error": "Error setting location"}), 500
 
 @app.route("/api/setLocationAlone/<string:mensaName>", methods=["POST"])
 def setLocationAlone(mensaName):
@@ -219,12 +209,13 @@ def setLocationAlone(mensaName):
         cursor.execute("""INSERT INTO groups (title) VALUES (%s) RETURNING groups.id;""", (content["personalId"],))
         group_id = cursor.fetchone()[0]
         cursor.execute("""INSERT INTO names_groups (name_id, group_id) VALUES (%s, %s);""", (content["personalId"], group_id,))
-        cursor.execute("""INSERT INTO locations (gid, location_x, location_y, joinable, mensa_id) values (%s, %s, %s, %s, %s) """, (group_id, content["location_x"], content["location_y"], 1,mensaid,))
+        cursor.execute("""INSERT INTO locations (gid, location_x, location_y, joinable, mensa_id) values (%s, %s, %s, %s, %s) """, (group_id, content["location_x"], content["location_y"], 1, mensaid,))
         conn.commit()
         return jsonify({"group_id": group_id})
     except Exception as e:
-        print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
+        print(f"Error setting location: {e}")
+        conn.rollback()
+        return jsonify({"error": "Error setting location"}), 500
     
 @app.route("/api/delLocationAlone/<int:gid>", methods=["DELETE"])
 def delLocationAlone(gid):
@@ -235,9 +226,9 @@ def delLocationAlone(gid):
         conn.commit()
         return jsonify({"message": "Location deleted successful"})
     except Exception as e:
-        print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
-
+        print(f"Error deleting location: {e}")
+        conn.rollback()
+        return jsonify({"error": "Error deleting location"}), 500
 
 @app.route("/api/delLocationGroup/<int:gid>", methods=["DELETE"])
 def delLocationGroup(gid):
@@ -248,45 +239,22 @@ def delLocationGroup(gid):
         conn.commit()
         return jsonify({"message": "Location deleted successful"})
     except Exception as e:
-        print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
-
+        print(f"Error deleting location: {e}")
+        conn.rollback()
+        return jsonify({"error": "Error deleting location"}), 500
 
 @app.route("/api/removeFromGroup/<int:gid>/<int:pid>", methods=["DELETE"])
-def leaveGroup(gid,pid):
+def leaveGroup(gid, pid):
     if not conn or not cursor:
         return jsonify({"error": "Database connection not established"}), 500
     try:
-        content = request.get_json()
         cursor.execute("""DELETE FROM names_groups WHERE name_id = %s AND group_id = %s""", (pid, gid,))
         conn.commit()
         return jsonify({"message": "Leave group successful"})
     except Exception as e:
-        print(f"Error fetching group: {e}")
-        return jsonify({"error": "Error fetching group"  }), 500
-    
-
-# @app.route("/api/todos", methods=["GET"])
-# def fetch_todos():
-#     cursor.execute("SELECT * FROM todos")
-#     todos = cursor.fetchall()
-#     return todos
-
-
-# @app.route("/api/todos", methods=["POST"])
-# def create_todo():
-#     content = request.json
-#     cursor.execute("INSERT INTO todos (title) VALUES (%s) RETURNING id", (content["title"],))
-#     new_id = cursor.fetchone()[0]
-#     conn.commit()
-#     return jsonify({"id": new_id, "title": content["title"]})
-
-
-# @app.route("/api/todos/<int:id>", methods=["DELETE"])
-# def delete_todo(id):
-#     cursor.execute("DELETE FROM todos WHERE id = %s", (id,))
-#     conn.commit()
-#     return "OK"
+        print(f"Error leaving group: {e}")
+        conn.rollback()
+        return jsonify({"error": "Error leaving group"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

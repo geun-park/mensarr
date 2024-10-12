@@ -82,6 +82,7 @@ if not exists:
         location_y DOUBLE PRECISION NOT NULL,
         joinable int  DEFAULT 0,
         mensa_id INT REFERENCES mensa(id) ON DELETE CASCADE ON UPDATE CASCADE,
+        time TIMESTAMP DEFAULT now(),
         PRIMARY KEY (gid) 
     )
     """)
