@@ -1,4 +1,4 @@
-import { Group } from "@/types/GroupTypes";
+import { Group } from "@/types/types";
 import { ListRenderItem, View } from "react-native"
 import { List } from "react-native-paper";
 
