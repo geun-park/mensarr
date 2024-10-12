@@ -86,7 +86,7 @@ if not exists:
         (0, 1.0, 1.0, 0),
     ])
 
-    cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id, joinable) VALUES (%s, %s, %s, %s,%d) ON CONFLICT DO NOTHING", [
+    cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id, joinable) VALUES (%s, %s, %s, %s,%s) ON CONFLICT DO NOTHING", [
         (1, 1.0, 1.0, 0, 1),
     ])
 
