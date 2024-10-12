@@ -15,7 +15,7 @@ SELECT EXISTS (
 """)
 exists = cursor.fetchone()[0]
 if exists:
-    cursor.execute("""SELECT setval('table_name_column_name_seq', COALESCE((SELECT MAX(column_name) FROM table_name), 1), false);
+    cursor.execute("""SELECT setval(pg_get_serial_sequence('groups', 'id'), max(id)) FROM tbl;
     """)
 
 
