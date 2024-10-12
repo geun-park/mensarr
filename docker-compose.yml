@@ -1,6 +1,5 @@
 version: "3"
 services:
-
   backend:
     container_name: hack-backend
     build:
@@ -19,7 +18,6 @@ services:
       traefik.http.routers.backend.rule: PathPrefix(`/api`)
       traefik.http.services.backend.loadbalancer.server.port: 5000
     restart: unless-stopped
-
 
   frontend:
     container_name: react-native-frontend

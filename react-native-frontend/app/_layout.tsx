@@ -13,7 +13,7 @@ export default function Layout() {
 }
 
 function MainContent() {
-  const { userId } = useAuth();
+  const { userId, username} = useAuth();
   
 
   // Show LoginScreen if userId is not set
@@ -21,7 +21,8 @@ function MainContent() {
     return <LoginScreen />;
   }
 
-  console.log("user id set");
+  console.log(userId);
+  console.log(username);
   // Once userId is set, show the rest of the app
   return (
       <Stack>
