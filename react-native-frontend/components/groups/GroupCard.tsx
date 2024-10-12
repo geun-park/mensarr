@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ListRenderItem, View, StyleSheet, Alert } from "react-native"
 import { List, Provider, Menu } from "react-native-paper";
 import * as Clipboard from 'expo-clipboard';
+import { colors } from "@/app/theme";
 
 interface Props {
     group: Group
@@ -10,42 +11,42 @@ interface Props {
 
 const inviteLink = "https://localhost:8081/api/joinGroup/"
 
+const exitGroup = (groupID: number) => {
+    Alert.alert("Gruppe verlassen", "Du hast die Gruppe erfolgreich verlassen")
+}
+
 const copyToClipboard = (groupID: number) => {
     Clipboard.setString(inviteLink + groupID);
     Alert.alert("Link kopiert", "Der Link wurde in die Zwischenablage kopiert.");
 }
 
-const GroupCard = ({ group }: Props) => {
+const GroupCard = ({group}: Props) => {
     const [expanded, setExpanded] = useState(false);
     const handlePress = () => setExpanded(!expanded);
+    const colorStyle = expanded ? colors.textPrimary : "black";
     return(
         <List.Accordion
             onPress={handlePress}
-            style={styles.item}
             title={group.groupName}
-            titleStyle={styles.title}
+            titleStyle={{
+                fontSize: 25,
+                color: colorStyle
+            }}
+            style={{
+                padding: 20,
+            }}
             description={`Member: ${group.userNames.join(', ')}`}
-            left={(props: { color: string;  style: object }) => (
-            <List.Icon {...props} icon="account-group" />
+            left={() => (
+            <List.Icon color={colorStyle} icon="account-group" />
             )}>
+                {
+                    //Zeit, Gruppe verlassen
+                }
                 <List.Item title="Einladungslink kopieren" onPress={() => {copyToClipboard(group.groupID)}} left={props => <List.Icon {...props} icon="share" />}/>
-                <List.Item title="Unterpunkt 2" />
-                <List.Item title="Unterpunkt 3" />
+                <List.Item title="Unterpunkt 2"/>
+                <List.Item title="Gruppe verlassen" titleStyle={{color: "red"}}  onPress={() => {exitGroup(group.groupID)}}left={() => <List.Icon style={{paddingLeft: 20}} color="red" icon="exit-to-app" />}/>
             </List.Accordion>
-        )
-    }
+        )}
 
 
 export default GroupCard;
-
-const styles = StyleSheet.create({
-    item: {
-        display: "flex",
-        justifyContent: "center",
-        backgroundColor: "light-gray",
-        margin: 10,
-    },
-    title: {
-        fontSize: 30
-    }
-});

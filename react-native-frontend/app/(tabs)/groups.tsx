@@ -17,7 +17,6 @@ const groups:Group[] = [
 export default function Tab() {
   return (
     <View>
-      <Text>Da ist gar kein Zucker drinne</Text>
       <FlatList
         contentContainerStyle={styles.container}
         data={groups}
