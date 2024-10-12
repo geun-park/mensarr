@@ -1,6 +1,6 @@
 // src/screens/LoginScreen.tsx
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { colors, fonts, spacing, borderRadius } from '../theme';
 
@@ -36,7 +36,9 @@ const LoginScreen = () => {
         secureTextEntry  // Mask the password input
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button title="Login" onPress={handleLogin}  />
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+      <Text style={styles.loginButtonText}>Login</Text>
+    </TouchableOpacity>
     </View>
   );
 };
@@ -46,12 +48,12 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
+      alignItems: 'center', // Center horizontally
       padding: spacing.large,
       backgroundColor: colors.background,
     },
     title: {
       fontSize: fonts.sizeLarge,
-      fontFamily: fonts.bold,
       color: colors.textPrimary,
       textAlign: 'center',
       marginBottom: spacing.large,
@@ -67,6 +69,8 @@ const styles = StyleSheet.create({
       fontSize: fonts.sizeMedium,
       fontFamily: fonts.regular,
       color: colors.textPrimary,
+      width: '100%', // Set width to 100% to fill the container
+      maxWidth: 400, // Set a maximum width for the input fields
     },
     loginButton: {
       backgroundColor: colors.primary,
@@ -75,18 +79,19 @@ const styles = StyleSheet.create({
       paddingHorizontal: spacing.large,
       marginBottom: spacing.medium,
       alignItems: 'center',
+      width: '80%', // Set width to 80% to make it narrower than the input fields
+      maxWidth: 320, // Set a maximum width for the login button
     },
     loginButtonText: {
       color: '#fff',
       fontSize: fonts.sizeMedium,
-      fontFamily: fonts.bold,
+      
     },
     error: {
-        color: 'red',
-        marginBottom: 16,
-        textAlign: 'center',
+      color: 'red',
+      marginBottom: 16,
+      textAlign: 'center',
     },
-  
   });
   
 

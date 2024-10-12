@@ -9,8 +9,7 @@ export const colors = {
   };
   
   export const fonts = {
-    regular: 'Roboto-Regular',
-    bold: 'Roboto-Bold',
+   // Ensure you have the bold version
     sizeSmall: 12,
     sizeMedium: 16,
     sizeLarge: 20,
