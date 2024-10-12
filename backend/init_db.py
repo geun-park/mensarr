@@ -15,7 +15,7 @@ SELECT EXISTS (
 """)
 exists = cursor.fetchone()[0]
 if exists:
-    cursor.execute("""SELECT setval(pg_get_serial_sequence('groups', 'id'), max(id)) FROM tbl;
+    cursor.execute("""SELECT setval(pg_get_serial_sequence('groups', 'id'), max(id)) FROM groups;
     """)
 
 
