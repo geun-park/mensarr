@@ -17,7 +17,7 @@ const groups:Group[] = [
 export default function Tab() {
   return (
     <View>
-      
+      <Text>Da ist gar kein Zucker drinne</Text>
       <FlatList
         contentContainerStyle={styles.container}
         data={groups}
@@ -34,3 +34,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const renderGroup: ListRenderItem<Group> = ({ item }) => (
+  <List.Item
+  title={item.groupName}
+  description={`Users: ${item.userNames.join(', ')}`}
+  left={(props: { color: string;  style: object }) => (
+    <List.Icon {...props} icon="account-group" />
+  )}
+/>
+);
