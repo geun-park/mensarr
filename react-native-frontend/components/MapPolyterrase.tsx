@@ -37,7 +37,6 @@ const Map = () => {
         imageHeight={imageSize.height}
         panToMove={true}
         pinchToZoom={true}
-        
 
       >
         <TouchableWithoutFeedback onPress={handlePress}>
