@@ -1,5 +1,5 @@
 import GroupCard from '@/components/groups/GroupCard';
-import { Group } from '@/types/GroupTypes';
+import { Group } from '@/types/types';
 import { View, Text, ListRenderItem, FlatList } from 'react-native';
 import { List } from 'react-native-paper';
 
