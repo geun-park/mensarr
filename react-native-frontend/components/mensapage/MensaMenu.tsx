@@ -62,7 +62,7 @@ export default function MensaMenu({ navigation }: { navigation: MensaMenuScreenN
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
