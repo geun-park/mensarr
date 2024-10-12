@@ -32,33 +32,38 @@ type MensaMenuScreenNavigationProp = NativeStackNavigationProp<
 export default function MensaMenu({ navigation }: { navigation: MensaMenuScreenNavigationProp }) {
 
   const mensas = [
-    { name: 'Polymensa', route: 'Polymensa' },
-    { name: 'Obere UZH', route: 'ObereUZH' },
-    { name: 'Untere UZH', route: 'UntereUZH' },
-    { name: 'Polysnack', route: 'Polysnack' },
-    { name: 'Foodlab', route: 'Foodlab' },
-    { name: 'Tannenbar', route: 'Tannenbar' },
-    { name: 'Zweistein/Bqm', route: 'ZweisteinBqm' },
+    { name: 'Polymensa', route: 'Polymensa' , image:require('../../assets/images/Polymensa_menu.jpg')},
+    { name: 'Obere UZH', route: 'ObereUZH' , image:require('../../assets/images/ObereUZH_menu.jpeg')},
+    { name: 'Untere UZH', route: 'UntereUZH',image:require('../../assets/images/UntereUZH_menu.jpg') },
+    { name: 'Polysnack', route: 'Polysnack' , image:require('../../assets/images/Polysnack_menu.jpg')},
+    { name: 'Foodlab', route: 'Foodlab', image:require('../../assets/images/Foodlab_menu.jpeg')} ,
+    { name: 'Tannenbar', route: 'Tannenbar', image:require('../../assets/images/Tannenbar_menu.jpg' )},
+    { name: 'Zweistein', route: 'Zweistein' , image:require('../../assets/images/Zweistein_menu.jpeg')},
   ];
   
   return (
-      <ScrollView contentContainerStyle={styles.container}>
-        {mensas.map((mensa, index) => (
+    <ScrollView contentContainerStyle={styles.container}>
+      {mensas.map((mensa, index) => {
+        const imagePath: string = `../../assets/images/${mensa.route}_menu.jpg`;
+        return (
           <TouchableOpacity
             key={index}
             style={styles.card}
             onPress={() => navigation.navigate(mensa.route as keyof RootStackParamList)}
           >
             <Image
-              source={{ uri: 'https://via.placeholder.com/150' }} // Placeholder image
+              source={mensa.image}
               style={styles.image}
+              resizeMode='cover'
             />
             <Text style={styles.text}>{mensa.name}</Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-    );
-}
+        );
+      })}
+    </ScrollView>
+  );
+  }
+
 
 const styles = StyleSheet.create({
   container: {

@@ -49,10 +49,10 @@ function Tannenbar() {
   );
 }
 
-function ZweisteinBqm() {
+function Zweistein() {
   return (
     <View style={styles.emptyContainer}>
-      <Text style={styles.emptyText}>Welcome to Zweistein/Bqm!</Text>
+      <Text style={styles.emptyText}>Welcome to Zweistein!</Text>
     </View>
   );
 }
@@ -70,7 +70,7 @@ export default function Tab() {
         <HomeStack.Screen name="Polysnack" component={Polysnack} />
         <HomeStack.Screen name="Foodlab" component={Foodlab} />
         <HomeStack.Screen name="Tannenbar" component={Tannenbar} />
-        <HomeStack.Screen name="ZweisteinBqm" component={ZweisteinBqm} />
+        <HomeStack.Screen name="Zweistein" component={Zweistein} />
       
     </HomeStack.Navigator>
   );
