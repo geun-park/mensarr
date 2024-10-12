@@ -68,12 +68,12 @@ if not exists:
         location_x DOUBLE PRECISION NOT NULL,
         location_y DOUBLE PRECISION NOT NULL,
         joinable BOOLEAN DEFAULT FALSE,
-        mensa string NOT NULL,
+        mensa_id string NOT NULL,
         PRIMARY KEY (gid) 
     )
     """)
 
-    cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING", [
+    cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING", [
         (0, 1.0, 1.0, 0, "POLY"),
     ])
 
