@@ -17,4 +17,4 @@ COPY . .
 RUN yarn global add expo-cli
 
 # Start the Expo development server
-CMD ["expo", "start", "--tunnel"]
+CMD ["yarn", "start"]
