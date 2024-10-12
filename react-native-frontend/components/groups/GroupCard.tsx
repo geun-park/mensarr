@@ -1,4 +1,4 @@
-import { Group } from "@/types/GroupTypes";
+import { Group } from "@/types/types";
 import { useState } from "react";
 import { ListRenderItem, View, StyleSheet, Alert } from "react-native"
 import { List, Provider, Menu } from "react-native-paper";

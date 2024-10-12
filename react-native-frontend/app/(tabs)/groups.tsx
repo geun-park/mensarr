@@ -1,5 +1,5 @@
 import GroupCard from '@/components/groups/GroupCard';
-import { Group } from '@/types/GroupTypes';
+import { Group } from '@/types/types';
 import { View, Text, ListRenderItem, FlatList, StyleSheet } from 'react-native';
 import { List } from 'react-native-paper';
 
@@ -31,7 +31,6 @@ export default function Tab() {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    flex: 1,
   },
 });
 
