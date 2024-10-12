@@ -1,46 +1,30 @@
-import { View, Text, StyleSheet , Dimensions} from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import MapPolyterrase from '@/components/MapPolyterrase';
-import SideButton from '@/components/SideButton'
-import PopupMenu from '../PopUpMenu';
-
-const { width, height } = Dimensions.get('window');
+import MapPolyterrase from '../MapPolyterrase';  // Import your Map component
+import PopupMenu from '../PopUpMenu';  // Import PopupMenu component
+import SideButton from '../SideButton';
 
 export default function Polymensa() {
   return (
-    <GestureHandlerRootView>
-    <View >
-      {/* <MapPolyterrase style={styles.map}/> */}
+    <GestureHandlerRootView style={styles.container}>
+      <MapPolyterrase />
 
-      <PopupMenu style={styles.menubutton}/>
-      {/* <SideButton>
-      </SideButton> */}
-    </View>
+      {/* Positioning the button over the map */}
+      <SideButton style={styles.menuButton} />
     </GestureHandlerRootView>
-    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // position: 'relative',
-    width: width,
-    height: height,
-
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  map: {
-    // position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0, 
-    bottom: 0,
-    width: width,
-    height: height,
-  },
-  menubutton: {
+  menuButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 20,
-  }
-
-})
+    bottom: 20, // Position the button near the bottom of the screen
+    right: 20,  // Position it on the right
+  },
+});

@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { StyleSheet , TouchableOpacity, Animated, View} from 'react-native'
-import { Icon } from 'react-native-paper'
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-import { FAB } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+import { FAB,  } from 'react-native-paper';
+
+function handlePress() {
+    console.log('Pressed')
+}
 const SideButton = () => (
-    <TouchableOpacity style={styles.circle} onPress={() => console.log('Pressed')}>
-            <Icon source="plus" size={50} color="#FFFF"/>
+    <TouchableOpacity style={styles.circle} onPress={handlePress}>
+            <Icon name="group" size={20} color="#FFFF"/>
     </TouchableOpacity>
 
 );
@@ -17,9 +22,9 @@ const styles = StyleSheet.create({
     circle: {
         backgroundColor: '#eb4034',
         position: 'absolute',
-        width: 80,
-        height: 80,
-        borderRadius: 50,
+        width: 50,
+        height: 50,
+        borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
         bottom: 20,
