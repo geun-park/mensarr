@@ -12,21 +12,10 @@ const App = () => (
 export default function Tab() {
   return (
     <View style={{flex:1}}>
-      {/* <View style={{backgroundColor:"blue",flex:2}}></View>
-      <View style={{backgroundColor:"red",flexDirection:"row", flex:0.4}}>
-        <View style={{backgroundColor:"orange", flex:2}}></View>
-        <View style={{backgroundColor:"purple", flex:0.7, justifyContent: "center",}}>
-          <SideButton>
-            
-          </SideButton>
-        </View>
-      </View> */}
-      {/* <SideButton/> */} 
-      
       <MapPolyterrase/>
-      {/* <View>
-        
-      </View> */}
+      <SideButton>
+      </SideButton>
+
     </View>
     
   );
