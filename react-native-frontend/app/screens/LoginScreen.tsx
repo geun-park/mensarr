@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: colors.textSecondary,
       fontSize: fonts.sizeMedium,
-      fontFamily: fonts.regular,
       color: colors.textPrimary,
       width: '100%', // Set width to 100% to fill the container
       maxWidth: 400, // Set a maximum width for the input fields
