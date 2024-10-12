@@ -26,7 +26,7 @@ cursor.executemany("INSERT INTO groups (id, title) VALUES (%s, %s) ON CONFLICT D
 cursor.execute("""
 CREATE TABLE names (
     id SERIAL NOT NULL PRIMARY KEY,
-    title unique VARCHAR(255) NOT NULL
+    title  VARCHAR(255) NOT NULL UNIQUE
 )
 """)
 
@@ -59,17 +59,17 @@ CREATE TABLE mensa (
 cursor.execute("""
 CREATE TABLE locations (
     gid INT REFERENCES groups(id) ON DELETE CASCADE ON UPDATE CASCADE, 
-    location_x DOUBLE NOT NULL,
-    location_y DOUBLE NOT NULL,
+    location_x DOUBLE PRECISION NOT NULL,
+    location_y DOUBLE PRECISION NOT NULL,
     joinable BOOLEAN DEFAULT FALSE,
     mensa_id INT REFERENCES mensa(id) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (gid) 
 )
 """)
 
-cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING"), [
+cursor.executemany("INSERT INTO locations (gid, location_x, location_y, mensa_id) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING", [
     (0, 1.0, 1.0, 0),
-]
+])
 
 
 
