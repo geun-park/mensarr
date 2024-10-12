@@ -14,6 +14,8 @@ Icon
 
 # Thumbnails
 ._*
+backend/__pycache__/app.cpython-312.pyc
+backend/__pycache__/app.cpython-312.pyo
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
