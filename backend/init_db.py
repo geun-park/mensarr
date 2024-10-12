@@ -68,7 +68,7 @@ if not exists:
         location_x DOUBLE PRECISION NOT NULL,
         location_y DOUBLE PRECISION NOT NULL,
         joinable BOOLEAN DEFAULT FALSE,
-        mensa_id string NOT NULL,
+        mensa_id VARCHAR(255) NOT NULL,
         PRIMARY KEY (gid) 
     )
     """)
