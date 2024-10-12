@@ -37,7 +37,7 @@ if not exists:
 
     cursor.execute("""
     CREATE TABLE names (
-        id SERIAL NOT NULL PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         title  VARCHAR(255) NOT NULL UNIQUE
     )
     """)
