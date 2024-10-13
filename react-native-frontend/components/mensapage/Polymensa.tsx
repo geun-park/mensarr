@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Dimensions, use
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import MapPolyterrase from '../MapPolyterrase';  // Import your Map component
 import MapPolyPC from '../MapPolyPC';  // Import your Map component
-import {Group} from '@/types/types';
+import {Group, User} from '@/types/types';
 import SideButton from '../SideButton';
 import { Text, TouchableOpacity } from 'react-native';
 import MModal from '../modal/MModal';
@@ -15,6 +15,7 @@ import { colors } from '../../app/theme';
 import ImageZoom from 'react-native-image-pan-zoom';
 import {toggleTable, getTablesOfGroup} from "@/modules/firebase/tableAccess"
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getGroupsOfUser } from '@/modules/firebase/userAccess';
 
 function getAspectRatioSize({ aspectRatio, width }: { aspectRatio: number; width: number }) {
   return {
@@ -27,12 +28,19 @@ export default function Polymensa() {
   const { height, width } = useWindowDimensions();
   const {user ,setCurrentGroup} = useAuth();
   const[isModalVisible, setIsModalVisible] = React.useState(false);
+  const[assignedGroups, setAssignedGroups] = React.useState<Group[]>([]);
   const[selected, setSelected] = React.useState<number[]>([]);
   const handleGroupSelect = (groupID: number) => {
     setCurrentGroup(groupID);
     setIsModalVisible(false);
   };
 
+  useEffect(() => {
+    if(user === undefined)return;
+    getGroupsOfUser((user as User).name).then((result: Group[]) => {
+      setAssignedGroups(result);
+    })
+  }, [])//!!!!!
 
   useEffect(() => {
       getTablesOfGroup(user?.currentGroup || -1).then((tables) => {
@@ -77,7 +85,7 @@ export default function Polymensa() {
           
             <Text style={styles.title}>Choose your group</Text>
             <ScrollView style={styles.scrollView}>
-              {user?.assignedGroups.map((group) => (
+              {assignedGroups.map((group) => (
                 <TouchableOpacity
                   key={group.groupID}
                   style={styles.groupItem}

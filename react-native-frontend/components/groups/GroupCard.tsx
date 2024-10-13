@@ -30,7 +30,7 @@ const GroupCard = ({group, setGroups, groups}: Props) => {
 
     const [selectedNumber, setSelectedNumber] = useState<number>(30);
 
-    const {user} = useAuth();
+    const {user, setCurrentGroup} = useAuth();
  
     const handleValueChange = (value: number) => {
       setSelectedNumber(value);
@@ -38,7 +38,7 @@ const GroupCard = ({group, setGroups, groups}: Props) => {
 
     const exitGroup = (groupID: number, userName: string) => {
         removeSingleMember(groupID, userName)
-
+        if(user!== undefined && user?.currentGroup === groupID)setCurrentGroup(-1)
     }
     React.useEffect(() => {
       if(user == undefined)return;
