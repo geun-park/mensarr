@@ -40,11 +40,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   function getUserFromName(username : string) {
+    if(username === "") {
+      return;
+    }
+    if(username==="admin") {
+      const fetchedUser: User = {
+        // Simulated groups array
+         name: username,
+         userID: 1,
+         currentGroup: 1,
+         currentIsPublic: false,
+         assignedGroups: [
+           {
+             groupID: 1,
+             groupName: 'Group 1',
+             userIDs: [1, 2, 3],
+             userNames: ['User 1', 'User 2', 'User 3'],
+           },
+           {
+             groupID: 2,
+             groupName: 'Group 2',
+             userIDs: [4, 5, 6],
+             userNames: ['User 4', 'User 5', 'User 6'],
+           },],
+     };
+     setUser(fetchedUser);
+    }
   
     getUserId(username).then(response => {
           if (!response) {
             throw new Error('Network response was not ok');
           }
+          console.log('User ID:', response);
           getGroupsOfUser(username).then(groups => {
               setUser({
                 name: username,

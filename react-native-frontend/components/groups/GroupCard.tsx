@@ -1,4 +1,4 @@
-import { Group } from "@/types/types";
+import { Group, User } from "@/types/types";
 import { useState } from "react";
 import { ListRenderItem, View, StyleSheet, Alert, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, Button, TextInput } from "react-native";
 import { List, Provider, Menu } from "react-native-paper";
@@ -8,13 +8,11 @@ import MModal from "../modal/MModal";
 import NumberSlider from "./NumberSlider";
 
 import SideButton from "../SideButton";
+import { addSingleMember, removeSingleMember } from "@/modules/firebase/groupAccess";
+import { useAuth } from "@/app/context/AuthContext";
 
 interface Props {
     group: Group
-}
-
-const exitGroup = (groupID: number) => {
-    Alert.alert("Gruppe verlassen", "Du hast die Gruppe erfolgreich verlassen")
 }
 
 const GroupCard = ({group}: Props) => {
@@ -27,16 +25,20 @@ const GroupCard = ({group}: Props) => {
     const [success, setSuccess] = useState<number>(0);
 
     const [selectedNumber, setSelectedNumber] = useState<number>(30);
+
+    const {user} = useAuth();
  
     const handleValueChange = (value: number) => {
       setSelectedNumber(value);
     };
 
+    const exitGroup = (groupID: number, userName: string) => {
+        removeSingleMember(groupID, userName)
+    }
 
-    function handleAddMember() {
-        //API SHIT -->
-
-        setSuccess(2)
+    async function handleAddMember() {
+        const success = await addSingleMember(group.groupID, username)
+        setSuccess(success ? 1 : 2)
         setUsername("");
     }
     return (
@@ -62,7 +64,7 @@ const GroupCard = ({group}: Props) => {
                       <Text style={styles.loginButtonText}>ADD</Text>
                     </TouchableOpacity>
                     {success === 1 && <Text style={styles.successText}>Success!</Text>}
-                    {success === 2 && <Text style={styles.errorText}>Error!</Text>}
+                    {success === 2 && <Text style={styles.errorText}>Please add an existing user, who is not already in the group!</Text>}
                   </View>
             </MModal>
 
@@ -83,7 +85,7 @@ const GroupCard = ({group}: Props) => {
             >
                 <List.Item title="Add members" onPress={() => { setIsTeamModalVisible(true) }} left={props => <List.Icon {...props} icon="account-plus" />} />
                 <List.Item title={selectedNumber + " min"} onPress={() => { setIsModalVisible(true) }} left={props => <List.Icon {...props} icon="clock-time-seven-outline"/>}  right={() => <Text style={styles.editButton}>EDIT</Text>} />
-                <List.Item title="Leave group" titleStyle={{ color: "red" }} onPress={() => { exitGroup(group.groupID) }} left={() => <List.Icon style={{ paddingLeft: 20 }} color="red" icon="exit-to-app" />} />
+                <List.Item title="Leave group" titleStyle={{ color: "red" }} onPress={() => { exitGroup(group.groupID, (user as User).name) }} left={() => <List.Icon style={{ paddingLeft: 20 }} color="red" icon="exit-to-app" />} />
             </List.Accordion>
         </View>
     );

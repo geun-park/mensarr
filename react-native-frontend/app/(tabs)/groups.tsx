@@ -6,19 +6,21 @@ import { Group } from '@/types/types';
 import { useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Checkbox, List } from 'react-native-paper';
+import { useAuth } from '../context/AuthContext';
+import { getGroupsOfUser } from '@/modules/firebase/userAccess';
 
-const groups:Group[] = [
-  { groupID: 1,
-    groupName: "babas",
-    userIDs: [123,124,125],
-    userNames: ['Tom', 'Michael', 'Pascale'] },
-  { groupID: 2,
-    groupName: "zucker",
-    userIDs: [12,13,14],
-    userNames: ['Fas', 'Geun', 'Ryo'] }
-];
 
 export default function Tab() {
+
+  const{user} = useAuth()
+  
+  const [groups, setGroups] = useState<Group[]>([]);
+  React.useEffect(() => {
+    if(user == undefined)return;
+    getGroupsOfUser(user.name).then((result: Group[]) => {
+      setGroups(result)
+    })
+  }, [])
 
   // modal button
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
