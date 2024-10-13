@@ -1,14 +1,13 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAhFKm0Bt-fA1RtyjiI1xN9VDr9IqMMnLA",
-  authDomain: "visconhackathon.firebaseapp.com",
-  databaseURL: "https://visconhackathon-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "visconhackathon",
-  storageBucket: "visconhackathon.appspot.com",
-  messagingSenderId: "612235152272",
-  appId: "1:612235152272:web:4a2aaf5a42a3dda5848115",
-  measurementId: "G-RSYVM7WBJG"
+  apiKey: "AIzaSyDgkbb6bJukGoKViEICVuyKFaf-QAXoP1M",
+  authDomain: "vishack-4cd12.firebaseapp.com",
+  projectId: "vishack-4cd12",
+  storageBucket: "vishack-4cd12.appspot.com",
+  messagingSenderId: "1044444422650",
+  appId: "1:1044444422650:web:8bd37ddefd1981a6180443",
+  measurementId: "G-V7L82T9116"
 };
 
 // Initialize Firebase

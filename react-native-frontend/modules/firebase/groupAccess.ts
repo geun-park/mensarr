@@ -1,6 +1,6 @@
 import { Group } from "@/types/types";
 import { db, getAllFromFirestore, getFromFirestore } from "./firestore";
-import { getMultipleUserIds } from "./userAccess";
+import { getMultipleUserIds, getUserId } from "./userAccess";
 import { DocumentData, doc, setDoc, updateDoc } from "firebase/firestore";
 
 
@@ -25,11 +25,11 @@ export const addGroup = async (groupName: string, userNames: string[]) => {
 }
 
 export const addSingleMember = async (groupId: number, userName: string) => {
-
     const group = await getGroupById(groupId);
     const docRef = doc(db, 'Groups', groupId.toString());
-    if(group == undefined || group.userNames.includes(userName))return false;
-
+    const userId = await getUserId(userName)
+    if(group === undefined || group.userNames.includes(userName) || userId === undefined)return false;
+    
     group.userNames.push(userName)
     await updateDoc(docRef, {
         userNames: group.userNames
@@ -50,6 +50,20 @@ export const addMultipleMembers = async (groupId: number, userNames: string[]) =
         }
     })
     if(!changed)return false;
+    await updateDoc(docRef, {
+        userNames: group.userNames
+    });
+    return true;
+}
+
+export const removeSingleMember = async (groupId: number, userName: string) => {
+    const group = await getGroupById(groupId);
+    const docRef = doc(db, 'Groups', groupId.toString());
+    const userId = await getUserId(userName)
+    if(group === undefined || !group.userNames.includes(userName) || userId === undefined)return false;
+    
+    const index = group.userNames.indexOf(userName);
+    group.userNames = group.userNames.splice(index, index)
     await updateDoc(docRef, {
         userNames: group.userNames
     });

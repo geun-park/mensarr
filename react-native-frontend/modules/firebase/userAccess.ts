@@ -4,6 +4,9 @@ import { Group } from "@/types/types";
 import { formatGroup } from "./groupAccess";
 
 export const getUserId = async (userName: string): Promise<number | undefined> => {
+    if(userName === ""){
+        return undefined;
+    }
     const data: DocumentData | undefined = await getFromFirestore("User", userName);
     return data ? data.id : data;
 }
