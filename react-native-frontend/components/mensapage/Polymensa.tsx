@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Dimensions, useWindowDimensions, Image } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import MapPolyterrase from '../MapPolyterrase';  // Import your Map component
@@ -13,6 +13,7 @@ import GroupButton from '../GroupButton';
 import { IconButton } from 'react-native-paper';
 import { colors } from '../../app/theme';
 import ImageZoom from 'react-native-image-pan-zoom';
+import {toggleTable, getTablesOfGroup} from "@/modules/firebase/tableAccess"
 
 function getAspectRatioSize({ aspectRatio, width }: { aspectRatio: number; width: number }) {
   return {
@@ -23,16 +24,26 @@ function getAspectRatioSize({ aspectRatio, width }: { aspectRatio: number; width
 
 export default function Polymensa() {
   const { height, width } = useWindowDimensions();
-  const {user,  setCurrentGroup} = useAuth();
+  const {user ,setCurrentGroup} = useAuth();
   const[isModalVisible, setIsModalVisible] = React.useState(false);
+  const[selected, setSelected] = React.useState<number[]>([]);
   const handleGroupSelect = (groupID: number) => {
     setCurrentGroup(groupID);
     setIsModalVisible(false);
-    
   };
 
+
+  useEffect(() => {
+      getTablesOfGroup(user?.currentGroup || -1).then((tables) => {
+      setSelected(tables);
+    })}, [user?.currentGroup]);
+
   const handleAreaPress = (i : number) => {
-    console.log('Area' + i + 'pressed');
+    toggleTable(i, user?.currentGroup || -1).then((tables) => {
+      getTablesOfGroup(user?.currentGroup || -1).then((tables) => {
+        setSelected(tables);
+        }
+    )});
   };
 
   let areas = [];
@@ -47,7 +58,6 @@ export default function Polymensa() {
   ///add Point -> add points to group table list
   ///remove Point -> remove points from group table list
 
-  const selected = [123]
 
 
   const resolution = [834, 1201];  // The original resolution of the image
