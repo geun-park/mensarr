@@ -10,10 +10,11 @@ import MModal from '../modal/MModal';
 import { fonts } from '@/app/theme';
 import { useAuth } from '@/app/context/AuthContext';
 import GroupButton from '../GroupButton';
-import { IconButton } from 'react-native-paper';
+import {IconButton } from 'react-native-paper';
 import { colors } from '../../app/theme';
 import ImageZoom from 'react-native-image-pan-zoom';
 import {toggleTable, getTablesOfGroup} from "@/modules/firebase/tableAccess"
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function getAspectRatioSize({ aspectRatio, width }: { aspectRatio: number; width: number }) {
   return {
@@ -118,12 +119,34 @@ export default function Polymensa() {
       
       {/* Positioning the button over the map */}
       <GroupButton setIsModalVisible={setIsModalVisible}/>
+      <TouchableOpacity
+        style={[
+          styles.circle,
+        ]}
+        onPress={() => getTablesOfGroup(user?.currentGroup || -1).then((tables) => {
+          setSelected(tables);
+        })}
+      >
+        <Icon name="refresh" size={20} color="#FFFF" />
+    </TouchableOpacity>
       
     </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
+  circle :{
+    backgroundColor: '#eb4034',
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 20,
+    left: 20
+
+  },
   imageContainer: {
     marginTop : 25,
     position: 'relative',
