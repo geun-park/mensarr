@@ -8,6 +8,7 @@ import { Text, TouchableOpacity } from 'react-native';
 import MModal from '../modal/MModal';
 import { fonts } from '@/app/theme';
 import { useAuth } from '@/app/context/AuthContext';
+import GroupButton from '../GroupButton';
 
 export default function Polymensa() {
   const {user,  setCurrentGroup} = useAuth();
@@ -67,7 +68,7 @@ export default function Polymensa() {
       <MapPolyterrase />
 
       {/* Positioning the button over the map */}
-      <SideButton setIsModalVisible={setIsModalVisible}/>
+      <GroupButton setIsModalVisible={setIsModalVisible}/>
       
     </GestureHandlerRootView>
   );

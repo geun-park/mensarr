@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if(groupID === -1){
         setUser({ ...user, currentGroup: groupID, currentIsPublic: true });
       } else {
-      setUser({ ...user, currentGroup: groupID });
+      setUser({ ...user, currentGroup: groupID, currentIsPublic: false });
     }
   }
   }
