@@ -67,7 +67,12 @@ export default function Polymensa() {
   ///add Point -> add points to group table list
   ///remove Point -> remove points from group table list
 
-
+  function handler() {
+    getTablesOfGroup(user?.currentGroup || -1).then((tables) => {
+      setSelected(tables);});
+    getGroupsOfUser((user as User).name).then((result: Group[]) => {
+    setAssignedGroups(result);})
+  }
 
   const resolution = [834, 1201];  // The original resolution of the image
 
@@ -131,9 +136,7 @@ export default function Polymensa() {
         style={[
           styles.circle,
         ]}
-        onPress={() => getTablesOfGroup(user?.currentGroup || -1).then((tables) => {
-          setSelected(tables);
-        })}
+        onPress={() => handler()}
       >
         <Icon name="refresh" size={20} color="#FFFF" />
     </TouchableOpacity>
