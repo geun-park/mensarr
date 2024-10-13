@@ -10,12 +10,16 @@ import NumberSlider from "./NumberSlider";
 import SideButton from "../SideButton";
 import { addSingleMember, removeSingleMember } from "@/modules/firebase/groupAccess";
 import { useAuth } from "@/app/context/AuthContext";
+import React from "react";
+import { getGroupsOfUser } from "@/modules/firebase/userAccess";
 
 interface Props {
     group: Group
+    setGroups: React.Dispatch<React.SetStateAction<Group[]>>
+    groups: Group[]
 }
 
-const GroupCard = ({group}: Props) => {
+const GroupCard = ({group, setGroups, groups}: Props) => {
     const [expanded, setExpanded] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [isTeamModalVisible, setIsTeamModalVisible] = useState<boolean>(false);
@@ -34,6 +38,19 @@ const GroupCard = ({group}: Props) => {
 
     const exitGroup = (groupID: number, userName: string) => {
         removeSingleMember(groupID, userName)
+
+    }
+    React.useEffect(() => {
+      if(user == undefined)return;
+      getGroupsOfUser(user.name).then((result: Group[]) => {
+        setGroups(result)
+      })
+    }, [isTeamModalVisible])
+    async function handleLeave () {
+        if(!user) return;
+        exitGroup(group.groupID, user.name);
+        const newGroups = groups.filter((g) => g.groupID !== group.groupID)
+        setGroups(newGroups)
     }
 
     async function handleAddMember() {
@@ -52,7 +69,7 @@ const GroupCard = ({group}: Props) => {
 
             <MModal isModalVisible={isTeamModalVisible} setIsModalVisible={setIsTeamModalVisible}>
                 <Text style={styles.title}>Add member by username</Text>
-                <View style={styles.container}>
+                <View style={styles.containerlogin}>
                 <TextInput
                     style={styles.input}
                     placeholder="Username"
@@ -85,7 +102,7 @@ const GroupCard = ({group}: Props) => {
             >
                 <List.Item title="Add members" onPress={() => { setIsTeamModalVisible(true) }} left={props => <List.Icon {...props} icon="account-plus" />} />
                 <List.Item title={selectedNumber + " min"} onPress={() => { setIsModalVisible(true) }} left={props => <List.Icon {...props} icon="clock-time-seven-outline"/>}  right={() => <Text style={styles.editButton}>EDIT</Text>} />
-                <List.Item title="Leave group" titleStyle={{ color: "red" }} onPress={() => { exitGroup(group.groupID, (user as User).name) }} left={() => <List.Icon style={{ paddingLeft: 20 }} color="red" icon="exit-to-app" />} />
+                <List.Item title="Leave group" titleStyle={{ color: "red" }} onPress={handleLeave} left={() => <List.Icon style={{ paddingLeft: 20 }} color="red" icon="exit-to-app" />} />
             </List.Accordion>
         </View>
     );
@@ -117,7 +134,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.medium,
     alignItems: 'center',
     width: '80%', // Set width to 80% to make it narrower than the input fields
-    maxWidth: 320, // Set a maximum width for the login button
+     // Set a maximum width for the login button
   },
   container: {
     margin: 10,
@@ -125,7 +142,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: 'black',
+  },
+  containerlogin: {
+    margin: 10,
     
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
     backgroundColor: '#fff',
@@ -138,7 +160,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.sizeMedium,
     color: colors.textPrimary,
     width: '100%', // Set width to 100% to fill the container
-    maxWidth: 400, // Set a maximum width for the input fields
+     // Set a maximum width for the input fields
   },
   editButton: {
     color: "black",
