@@ -19,4 +19,5 @@ RUN yarn global add expo-cli
 RUN yarn install
 
 # Start the Expo development server
-CMD ["yarn", "start"]
+# CMD ["yarn", "start"]
+CMD ["tail", "-f", "/dev/null"]
