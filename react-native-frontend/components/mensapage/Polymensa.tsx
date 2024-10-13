@@ -20,7 +20,7 @@ export default function Polymensa() {
   };
   return (
     <GestureHandlerRootView style={styles.container}>
-      <MModal isModalVisible={isModalVisible} >
+      <MModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} >
       <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
         <View style={{  justifyContent: 'center', alignItems: 'center' }}>
           
@@ -48,19 +48,7 @@ export default function Polymensa() {
             </TouchableOpacity>
 
             
-            <TouchableOpacity
-              style={[
-                styles.button,
-                {
-                  width: '100%',
-                  marginTop: 24,
-                  backgroundColor: 'rgba(0,0,0,0.1)',
-                },
-              ]}
-              onPress={() => setIsModalVisible(false)}
-            >
-              <Text style={[styles.text, { color: 'black' }]}>Close</Text>
-            </TouchableOpacity>
+         
           
         </View>
       </TouchableWithoutFeedback>
