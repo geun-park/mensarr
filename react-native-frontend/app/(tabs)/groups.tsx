@@ -151,6 +151,8 @@ export default function Tab() {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
+    borderRadius: 15,
+    
   },
   menuButton: {
     position: 'absolute',
