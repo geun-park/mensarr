@@ -120,8 +120,11 @@ const styles = StyleSheet.create({
     maxWidth: 320, // Set a maximum width for the login button
   },
   container: {
-    margin: 5,
+    margin: 10,
     borderRadius: 10,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'black',
     
   },
   input: {

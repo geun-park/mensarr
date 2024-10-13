@@ -15,10 +15,11 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
         }}
       />
-      <Tabs.Screen
+      <Tabs.Screen 
         name="groups"
         options={{
-
+          headerStyle: { backgroundColor: colors.primary },
+          
           title: 'Manage your Groups',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="group" color={color} />,
         }}
