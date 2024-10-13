@@ -4,7 +4,6 @@ import { ListRenderItem, View, StyleSheet, Alert, Text, Modal, TouchableOpacity,
 import { List, Provider, Menu } from "react-native-paper";
 import * as Clipboard from 'expo-clipboard';
 import { colors, fonts, spacing, borderRadius } from "@/app/theme";
-import EmojiPicker from "./TimePopover";
 import MModal from "../modal/MModal";
 import NumberSlider from "./NumberSlider";
 
@@ -36,7 +35,7 @@ const GroupCard = ({group}: Props) => {
     function handleAddMember() {
         //API SHIT -->
 
-        setSuccess(1)
+        setSuccess(2)
         setUsername("");
     }
     return (
