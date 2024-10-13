@@ -10,20 +10,18 @@ import { fonts } from '@/app/theme';
 import { useAuth } from '@/app/context/AuthContext';
 
 export default function Polymensa() {
-  const {user} = useAuth();
+  const {user,  setCurrentGroup} = useAuth();
   const[isModalVisible, setIsModalVisible] = React.useState(false);
-  const handleGroupSelect = (group: Group) => {
-    if(!user) return;
-
-    user.currentGroup = group.groupID;
-    console.log(user.currentGroup);
+  const handleGroupSelect = (groupID: number) => {
+    setCurrentGroup(groupID);
     setIsModalVisible(false);
+    
   };
   return (
     <GestureHandlerRootView style={styles.container}>
       <MModal isModalVisible={isModalVisible} >
       <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{  justifyContent: 'center', alignItems: 'center' }}>
           
             <Text style={styles.title}>Choose your group</Text>
             <ScrollView style={styles.scrollView}>
@@ -31,7 +29,7 @@ export default function Polymensa() {
                 <TouchableOpacity
                   key={group.groupID}
                   style={styles.groupItem}
-                  onPress={() => handleGroupSelect(group)}
+                  onPress={() => handleGroupSelect(group.groupID)}
                 >
                   {/*currently the UI does not rerender when we change the group as we use no Hook, don't matter however*/}
                   <Text style={styles.groupText}>{group.groupName}</Text>
@@ -39,6 +37,14 @@ export default function Polymensa() {
                 </TouchableOpacity>
               ))}
             </ScrollView>
+
+            
+            <TouchableOpacity
+              style={[styles.button, { width: '100%', marginTop: 24, backgroundColor: 'green' }]}
+              onPress={() => handleGroupSelect(-1)}
+            >
+              <Text style={[styles.text, { color: 'white' }]}>Go Public</Text>
+            </TouchableOpacity>
 
             
             <TouchableOpacity
@@ -73,7 +79,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontFamily: fonts.primary,
     marginBottom: 16,
   },
   scrollView: {
@@ -94,6 +99,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
   },
+  text:{
+    fontSize: fonts.sizeMedium,
+  
+  },
   button: {
     padding: 16,
     justifyContent: 'center',
@@ -104,4 +113,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
   },
+
 });

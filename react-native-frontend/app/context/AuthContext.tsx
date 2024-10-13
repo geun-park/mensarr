@@ -2,8 +2,10 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 import {User} from '../../types/types';
 
 interface AuthContextType {
-  user: User | null; // Store the full User object
+  user: User | null; 
+  setUser: React.Dispatch<React.SetStateAction<User | null>>// Store the full User object
   login: (username: string) => Promise<void>;
+  setCurrentGroup: (groupID: number) => void;
 }
 
 interface AuthProviderProps {
@@ -12,7 +14,9 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  setUser: () => {},
   login: async () => {},
+  setCurrentGroup: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -23,6 +27,16 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+
+   function setCurrentGroup(groupID: number) {
+    if (user) {
+      if(groupID === -1){
+        setUser({ ...user, currentGroup: groupID, currentIsPublic: true });
+      } else {
+      setUser({ ...user, currentGroup: groupID });
+    }
+  }
+  }
 
   function getUserFromName(username : string) {
     /*
@@ -76,7 +90,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, setUser, setCurrentGroup }}>
       {children}
     </AuthContext.Provider>
   );
