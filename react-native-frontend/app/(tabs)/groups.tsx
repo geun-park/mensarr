@@ -9,6 +9,7 @@ import { Checkbox, List } from 'react-native-paper';
 import { useAuth } from '../context/AuthContext';
 import { getGroupsOfUser } from '@/modules/firebase/userAccess';
 import { addGroup } from '@/modules/firebase/groupAccess';
+import { colors, fonts, spacing, borderRadius } from "@/app/theme";
 
 
 export default function Tab() {
@@ -48,7 +49,7 @@ export default function Tab() {
       <MModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
                 <Text style={styles.title}>Add Group</Text>
                 <Text style={styles.desc}>Name of Group</Text>
-                <View style={styles.textInput}>
+                <View style={styles.input}>
                   <TextInput 
                     // style={{padding: 16, margin: 50}} 
                     
@@ -74,7 +75,7 @@ export default function Tab() {
                       ]}
                       onPress={() => handleConfirm()}
                   > 
-                      <Text style={[styles.text, { color: "black" }]}>Confirm</Text>
+                      <Text style={[styles.text, { color: "white" }]}>Confirm</Text>
                   </TouchableOpacity>
                 </View>
                 {success === 1 && <Text >Success!</Text>}
@@ -139,6 +140,7 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     // flexDirection: 'row',
+
     
   },
   modalContainer: {
@@ -154,6 +156,23 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     fontSize: 20
   },
+  input: {
+
+    backgroundColor: '#fff',
+    borderRadius: borderRadius.medium,
+    paddingVertical: spacing.medium,
+    paddingHorizontal: spacing.large,
+    marginTop: 8,
+    marginBottom: 0,
+    borderWidth: 1,
+    borderColor: colors.textSecondary,
+    fontSize: fonts.sizeMedium,
+    color: colors.textPrimary,
+    width: '100%', // Set width to 100% to fill the container
+     // Set a maximum width for the input fields
+  },
+
+  
   list: {
     fontSize: 18,
     lineHeight: 24,
