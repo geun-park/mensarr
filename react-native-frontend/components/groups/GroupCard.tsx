@@ -125,8 +125,9 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: '#fff',
-    fontSize: fonts.sizeMedium,
-    
+    fontSize: 16,
+    fontWeight: "600",
+    // fontSize: fonts.sizeMedium,
   },
   loginButton: {
     backgroundColor: colors.primary,
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.medium,
     marginBottom: spacing.medium,
     alignItems: 'center',
-    width: '80%', // Set width to 80% to make it narrower than the input fields
+    width: '100%', // Set width to 80% to make it narrower than the input fields
      // Set a maximum width for the login button
   },
   container: {
