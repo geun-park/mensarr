@@ -32,13 +32,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-const renderGroup: ListRenderItem<Group> = ({ item }) => (
-  <List.Item
-  title={item.groupName}
-  description={`Users: ${item.userNames.join(', ')}`}
-  left={(props: { color: string;  style: object }) => (
-    <List.Icon {...props} icon="account-group" />
-  )}
-/>
-);
