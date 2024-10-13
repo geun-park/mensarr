@@ -77,7 +77,7 @@ const GroupCard = ({group, setGroups, groups}: Props) => {
                     onChangeText={setUsername}
                   />
 
-                   <TouchableOpacity style={styles.loginButton} onPress={handleAddMember}>
+                   <TouchableOpacity style={styles.addButton} onPress={handleAddMember}>
                       <Text style={styles.loginButtonText}>ADD</Text>
                     </TouchableOpacity>
                     {success === 1 && <Text style={styles.successText}>Success!</Text>}
@@ -128,6 +128,16 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: colors.primary,
+    borderRadius: borderRadius.medium,
+    paddingVertical: spacing.medium,
+    paddingHorizontal: spacing.medium,
+    marginBottom: spacing.medium,
+    alignItems: 'center',
+    width: '80%', // Set width to 80% to make it narrower than the input fields
+     // Set a maximum width for the login button
+  },
+  addButton: {
+    backgroundColor: "green",
     borderRadius: borderRadius.medium,
     paddingVertical: spacing.medium,
     paddingHorizontal: spacing.medium,

@@ -21,6 +21,7 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.logo}>Mensarr</Text>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: spacing.large,
       marginBottom: spacing.medium,
       alignItems: 'center',
-      width: '80%', // Set width to 80% to make it narrower than the input fields
+      width: '40%', // Set width to 80% to make it narrower than the input fields
       maxWidth: 320, // Set a maximum width for the login button
     },
     loginButtonText: {
@@ -91,6 +92,12 @@ const styles = StyleSheet.create({
       marginBottom: 16,
       textAlign: 'center',
     },
+    logo: {
+      fontWeight: 'bold',
+      fontSize: 50,
+      marginBottom: 50,
+
+    }
   });
   
 
