@@ -1,5 +1,6 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import {User} from '../../types/types';
+import { getGroupsOfUser, getUserId } from '@/modules/firebase/userAccess';
 
 interface AuthContextType {
   user: User | null; 
@@ -39,25 +40,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   function getUserFromName(username : string) {
-    /*
-    setUsername(name);
-    fetch(`/api/getIdFromName/${name}`)
-        .then(response => {
-          if (!response.ok) {
+  
+    getUserId(username).then(response => {
+          if (!response) {
             throw new Error('Network response was not ok');
           }
-          return response.json();
-        })
-        .then(data => {
-          if (data.error) {
-            throw new Error(data.error);
-          }
-          setUserId(data);
+          getGroupsOfUser(username).then(groups => {
+              setUser({
+                name: username,
+                userID: response,
+                currentGroup: -1,
+                currentIsPublic: true,
+                assignedGroups: groups
+              })
+          });
         })
         .catch(error => {
           console.error('Error fetching user ID:', error);
-        });*/
-        const fetchedUser: User = {
+        });
+        /*const fetchedUser: User = {
            // Simulated groups array
             name: username,
             userID: 1,
@@ -77,7 +78,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 userNames: ['User 4', 'User 5', 'User 6'],
               },],
         };
-        setUser(fetchedUser);
+        setUser(fetchedUser);*/
     
   }
   const login = async (username: string) => {

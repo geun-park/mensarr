@@ -37,7 +37,7 @@ export default function Tab() {
 
   return (
     <View style={{flex:1}}>
-      <MModal isModalVisible={isModalVisible}>
+      <MModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
                 <Text style={styles.title}>Add Group</Text>
                 <Text style={styles.desc}>Name of Group</Text>
                 <View style={styles.textInput}>
@@ -132,19 +132,6 @@ export default function Tab() {
                       <Text style={[styles.text, { color: "black" }]}>Confirm</Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity
-                      style={[
-                          styles.button,
-                          {
-                          width: "100%",
-                          marginTop: 24,
-                          backgroundColor: "rgba(0,0,0,0.1)",
-                          },
-                      ]}
-                      onPress={() => setIsModalVisible(false)}
-                  >
-                      <Text style={[styles.text, { color: "black" }]}>Close</Text>
-                  </TouchableOpacity>
 
                 </View>
                   
