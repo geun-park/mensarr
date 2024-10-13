@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Dimensions, useWindowDimensions, Image } from 'react-native';
+import React, { useEffect, useRef} from 'react';
+import { ScrollView, StyleSheet, TouchableWithoutFeedback, View, Animated, Dimensions, useWindowDimensions, Image } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import MapPolyterrase from '../MapPolyterrase';  // Import your Map component
 import MapPolyPC from '../MapPolyPC';  // Import your Map component
@@ -111,7 +111,7 @@ export default function Polymensa() {
        
         {areas.map((area, index) => (
           <TouchableOpacity key={index} style={[styles.touchableArea, {left: `${area.x}%`, top: `${area.y}%`}]} onPress={() => handleAreaPress(index)}>
-          {selected.includes(index) && <IconButton key={index} icon="map-marker" style={styles.iconButton} size={50} iconColor="red" onPress={() => handleAreaPress(index)} />}
+          {selected.includes(index) && (<IconButton key={index} icon="map-marker" style={styles.iconButton} size={50} iconColor={user?.currentIsPublic ? 'green' : colors.primary} onPress={() => handleAreaPress(index)} />)}
           </TouchableOpacity>
         ))} 
       </View>
@@ -200,6 +200,6 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     position: 'absolute',
-    color: 'blue', 
+    backgroundColor: "rgba(0,0,0,0.3)", 
   },
 });
