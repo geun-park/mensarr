@@ -26,7 +26,7 @@ services:
       dockerfile: ./Dockerfile
     expose:
       - 8081
-    command: ["npm", "start"]
+    # command: ["npm", "start"]
     working_dir: /app
     volumes:
       - ./react-native-frontend:/app
