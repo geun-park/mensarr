@@ -22,7 +22,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Mensarr</Text>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}></Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
       borderRadius: borderRadius.medium,
       paddingVertical: spacing.medium,
       paddingHorizontal: spacing.large,
+      marginTop: 10,
       marginBottom: spacing.medium,
       alignItems: 'center',
       width: '40%', // Set width to 80% to make it narrower than the input fields
