@@ -10,7 +10,7 @@ export const toggleTable = async (table: number, groupId: number) => {
     const fetchedTables = groupData.locations;
     if(fetchedTables.includes(table)) {
         const index = fetchedTables.indexOf(table);
-        fetchedTables.splice(index, index);
+        fetchedTables.splice(index, 1);
     }else {
         fetchedTables.push(table);
     }

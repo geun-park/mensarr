@@ -64,7 +64,7 @@ export const removeSingleMember = async (groupId: number, userName: string) => {
     if(group === undefined || !group.userNames.includes(userName) || userId === undefined)return false;
     
     const index = group.userNames.indexOf(userName);
-    group.userNames = group.userNames.splice(index, index)
+    group.userNames.splice(index, 1)
     await updateDoc(docRef, {
         userNames: group.userNames
     });
