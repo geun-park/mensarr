@@ -26,6 +26,7 @@ export default function Tab() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [groups, setGroups] = useState<Group[]>([]);
   React.useEffect(() => {
+    setSuccess(0);
     if(user == undefined)return;
     getGroupsOfUser(user.name).then((result: Group[]) => {
       setGroups(result)

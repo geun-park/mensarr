@@ -41,6 +41,8 @@ const GroupCard = ({group, setGroups, groups}: Props) => {
         if(user!== undefined && user?.currentGroup === groupID)setCurrentGroup(-1)
     }
     React.useEffect(() => {
+      
+      setSuccess(0);
       if(user == undefined)return;
       getGroupsOfUser(user.name).then((result: Group[]) => {
         setGroups(result)
@@ -80,8 +82,8 @@ const GroupCard = ({group, setGroups, groups}: Props) => {
                    <TouchableOpacity style={styles.addButton} onPress={handleAddMember}>
                       <Text style={styles.loginButtonText}>ADD</Text>
                     </TouchableOpacity>
-                    {success === 1 && <Text style={styles.successText}>Success!</Text>}
-                    {success === 2 && <Text style={styles.errorText}>Please add an existing user, who is not already in the group!</Text>}
+                    {success === 1 && <Text style={styles.successText}>Success! you can add more users or leave</Text>}
+                    {success === 2 && <Text style={styles.errorText}>Failed to add user</Text>}
                   </View>
             </MModal>
 
