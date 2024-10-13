@@ -7,6 +7,7 @@ import { colors, fonts, spacing, borderRadius } from "@/app/theme";
 import MModal from "../modal/MModal";
 import NumberSlider from "./NumberSlider";
 
+import SideButton from "../SideButton";
 
 interface Props {
     group: Group

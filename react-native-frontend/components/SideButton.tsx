@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { StyleSheet ,Text, TouchableOpacity, Animated, View} from 'react-native'
-
+import { StyleSheet , TouchableOpacity, Animated, View, GestureResponderEvent} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -11,12 +10,19 @@ interface SidebuttonProps {
     setIsModalVisible: (visible: boolean) => void;
   }
 
-const SideButton: React.FC<SidebuttonProps> = ({ setIsModalVisible }) => {
-    return(
-    <TouchableOpacity style={styles.circle} onPress={() => setIsModalVisible(true)}>
-    <Icon name="group" size={20} color="#FFFF"/>
-</TouchableOpacity>)
-  };
+function handlePress() {
+    console.log('Pressed')
+}
+
+interface Props {
+    onPress?: ((event: GestureResponderEvent) => void) 
+}
+const SideButton = ({onPress}: Props) => (
+    <TouchableOpacity style={styles.circle} onPress={onPress}>
+            <Icon name="group" size={20} color="#FFFF"/>
+    </TouchableOpacity>
+
+);
 
 export default SideButton;
 
