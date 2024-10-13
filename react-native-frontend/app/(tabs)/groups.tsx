@@ -6,6 +6,7 @@ import { Group } from '@/types/types';
 import { useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Checkbox, List } from 'react-native-paper';
+import { colors } from '../theme';
 
 const groups:Group[] = [
   { groupID: 1,
@@ -124,7 +125,7 @@ export default function Tab() {
                           {
                           width: "100%",
                           marginTop: 24,
-                          backgroundColor: "green",
+                          backgroundColor: colors.primary,
                           },
                       ]}
                       onPress={() => setIsModalVisible(false)}

@@ -6,6 +6,7 @@ import SideButton from '@/components/SideButton'
 import { Stack } from 'expo-router';
 import MensaMenu from '../../components/mensapage/MensaMenu';
 import Polymensa from '../../components/mensapage/Polymensa';
+import { colors } from '../theme';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -62,7 +63,13 @@ function Zweistein() {
 
 export default function Tab() {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: colors.primary, // Set the header background color here
+      },
+      headerTintColor: 'white', // Optional: Set the color of the header text/icons
+    }}>
       <HomeStack.Screen name="MensaMenu" component={MensaMenu} />
         <HomeStack.Screen name="Polymensa" component={Polymensa} />
         <HomeStack.Screen name="ObereUZH" component={ObereUZH} />

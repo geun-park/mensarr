@@ -4,12 +4,14 @@ import { colors } from '../theme';
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: colors.textPrimary }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: colors.primary }}>
       <Tabs.Screen
         name="index"
         options={{
           headerShown: false,
           title: 'Home',
+          
+          
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
         }}
       />

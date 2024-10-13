@@ -40,7 +40,7 @@ const GroupCard = ({group}: Props) => {
         setUsername("");
     }
     return (
-        <View>
+        <View style={styles.container}>
             <MModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
                 <Text style={styles.title}>How many minutes are you staying?</Text>
                 <View style={styles.sliderContainer}>
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     maxWidth: 320, // Set a maximum width for the login button
   },
   container: {
-    justifyContent: 'center',
-    alignItems: 'center', // Center horizontally
-    paddingTop: spacing.medium,
+    margin: 5,
+    borderRadius: 10,
+    
   },
   input: {
     backgroundColor: '#fff',

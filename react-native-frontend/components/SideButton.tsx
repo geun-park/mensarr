@@ -19,7 +19,7 @@ interface Props {
 }
 const SideButton = ({onPress}: Props) => (
     <TouchableOpacity style={styles.circle} onPress={onPress}>
-            <Icon name="group" size={20} color="#FFFF"/>
+            <Icon name="plus" size={20} color="#FFFF"/>
     </TouchableOpacity>
 
 );
