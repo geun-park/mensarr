@@ -9,5 +9,7 @@ export interface User {
     name: string,
     userID: number,
     currentGroup: number,
-    assignedGroups: Array<number>,
+    currentIsPublic: boolean,
+    assignedGroups: Array<Group>,
+    
 }

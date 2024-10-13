@@ -16,20 +16,19 @@ export default function Layout() {
 }
 
 function MainContent() {
-  const { userId, username} = useAuth();
+  const { user} = useAuth();
   
 
   // Show LoginScreen if userId is not set
-  if (!userId) {
+  if (!user) {
     return <LoginScreen />;
   }
 
-  console.log(userId);
-  console.log(username);
+  console.log(user);
   // Once userId is set, show the rest of the app
   return (
     
-         <Stack>
+      <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
    
