@@ -1,59 +1,71 @@
 import { Group } from "@/types/types";
 import { useState } from "react";
-import { ListRenderItem, View, StyleSheet, Alert, Text, Modal, TouchableOpacity } from "react-native"
+import { ListRenderItem, View, StyleSheet, Alert, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, Button, TextInput } from "react-native";
 import { List, Provider, Menu } from "react-native-paper";
 import * as Clipboard from 'expo-clipboard';
-import { colors } from "@/app/theme";
+import { colors, fonts, spacing, borderRadius } from "@/app/theme";
 import EmojiPicker from "./TimePopover";
 import MModal from "../modal/MModal";
+import NumberSlider from "./NumberSlider";
+
 
 interface Props {
     group: Group
 }
 
-const inviteLink = "https://localhost:8081/api/joinGroup/"
-
 const exitGroup = (groupID: number) => {
     Alert.alert("Gruppe verlassen", "Du hast die Gruppe erfolgreich verlassen")
-}
-
-const copyToClipboard = (groupID: number) => {
-    Clipboard.setString(inviteLink + groupID);
-    Alert.alert("Link kopiert", "Der Link wurde in die Zwischenablage kopiert.");
 }
 
 const GroupCard = ({group}: Props) => {
     const [expanded, setExpanded] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [isTeamModalVisible, setIsTeamModalVisible] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>("");
     const handlePress = () => setExpanded(!expanded);
     const colorStyle = expanded ? colors.textPrimary : "black";
+    const [success, setSuccess] = useState<number>(0);
 
-    return(
+    const [selectedNumber, setSelectedNumber] = useState<number>(30);
+ 
+    const handleValueChange = (value: number) => {
+      setSelectedNumber(value);
+    };
+
+
+    function handleAddMember() {
+        //API SHIT -->
+
+        setSuccess(1)
+        setUsername("");
+    }
+    return (
         <View>
-            <MModal isModalVisible={isModalVisible}>
-                <Text style={styles.title}>Title</Text>
-                    <Text style={styles.desc}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Architecto deleniti nemo rerum nulla sint consectetur id esse
-                    earum officia cupiditate aperiam, laboriosam repellat sapiente
-                    quam, a quisquam mollitia est quasi.
-                    </Text>
-                    <TouchableOpacity
-                        style={[
-                            styles.button,
-                            {
-                            width: "100%",
-                            marginTop: 24,
-                            backgroundColor: "rgba(0,0,0,0.1)",
-                            },
-                        ]}
-                        onPress={() => setIsModalVisible(false)}
-                    >
-                        <Text style={[styles.text, { color: "black" }]}>Close</Text>
-                    </TouchableOpacity>
+            <MModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+                <Text style={styles.title}>How many minutes are you staying?</Text>
+                <View style={styles.sliderContainer}>
+                  <NumberSlider initialValue={selectedNumber} onValueChange={handleValueChange} />
+                </View>
             </MModal>
-                   
-                
+
+            <MModal isModalVisible={isTeamModalVisible} setIsModalVisible={setIsTeamModalVisible}>
+                <Text style={styles.title}>Add member by username</Text>
+                <View style={styles.container}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={setUsername}
+                  />
+
+                   <TouchableOpacity style={styles.loginButton} onPress={handleAddMember}>
+                      <Text style={styles.loginButtonText}>ADD</Text>
+                    </TouchableOpacity>
+                    {success === 1 && <Text style={styles.successText}>Success!</Text>}
+                    {success === 2 && <Text style={styles.errorText}>Error!</Text>}
+                  </View>
+            </MModal>
+
             <List.Accordion
                 onPress={handlePress}
                 title={group.groupName}
@@ -66,62 +78,116 @@ const GroupCard = ({group}: Props) => {
                 }}
                 description={`Member: ${group.userNames.join(', ')}`}
                 left={() => (
-                <List.Icon color={colorStyle} icon="account-group" />
-                )}>
-                    {
-                        //Zeit, Gruppe verlassen
-                    }
-                    <List.Item title="Einladungslink kopieren" onPress={() => {copyToClipboard(group.groupID)}} left={props => <List.Icon {...props} icon="share" />}/>
-                    <List.Item title="Zeit ändern" onPress={() => {setIsModalVisible(true)}}/>
-                    <List.Item title="Gruppe verlassen" titleStyle={{color: "red"}}  onPress={() => {exitGroup(group.groupID)}}left={() => <List.Icon style={{paddingLeft: 20}} color="red" icon="exit-to-app" />}/>
-                </List.Accordion>
-            </View>
-        )}
-
+                    <List.Icon color={colorStyle} icon="account-group" />
+                )}
+            >
+                <List.Item title="Add members" onPress={() => { setIsTeamModalVisible(true) }} left={props => <List.Icon {...props} icon="account-plus" />} />
+                <List.Item title={selectedNumber + " min"} onPress={() => { setIsModalVisible(true) }} left={props => <List.Icon {...props} icon="clock-time-seven-outline"/>}  right={() => <Text style={styles.editButton}>EDIT</Text>} />
+                <List.Item title="Leave group" titleStyle={{ color: "red" }} onPress={() => { exitGroup(group.groupID) }} left={() => <List.Icon style={{ paddingLeft: 20 }} color="red" icon="exit-to-app" />} />
+            </List.Accordion>
+        </View>
+    );
+}
 
 export default GroupCard;
 
-
-
 const styles = StyleSheet.create({
+  successText: {
+    color: 'green',
+    fontSize: 16,
+    marginTop: 5,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+    marginTop: 5,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: fonts.sizeMedium,
+    
+  },
+  loginButton: {
+    backgroundColor: colors.primary,
+    borderRadius: borderRadius.medium,
+    paddingVertical: spacing.medium,
+    paddingHorizontal: spacing.medium,
+    marginBottom: spacing.medium,
+    alignItems: 'center',
+    width: '80%', // Set width to 80% to make it narrower than the input fields
+    maxWidth: 320, // Set a maximum width for the login button
+  },
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center', // Center horizontally
+    paddingTop: spacing.medium,
+  },
+  input: {
+    backgroundColor: '#fff',
+    borderRadius: borderRadius.medium,
+    paddingVertical: spacing.medium,
+    paddingHorizontal: spacing.large,
+    marginBottom: spacing.medium,
+    borderWidth: 1,
+    borderColor: colors.textSecondary,
+    fontSize: fonts.sizeMedium,
+    color: colors.textPrimary,
+    width: '100%', // Set width to 100% to fill the container
+    maxWidth: 400, // Set a maximum width for the input fields
+  },
+  editButton: {
+    color: "black",
+    fontSize: 16,
+    marginRight: 0,
+  },
+  selectedNumber: {
+    fontSize: 16,
+    color: 'black',
+    marginRight: 200,
+  },
+    sliderContainer: {
+      marginVertical: 0,
+    },
+    overlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'rgba(0,0,0,0.5)',
+    },
     desc: {
-      fontSize: 16,
-      lineHeight: 24,
-      opacity: 0.7,
+        fontSize: 16,
+        lineHeight: 24,
+        opacity: 0.7,
     },
     title: {
-      fontWeight: "600",
-      fontSize: 18,
-      marginBottom: 12,
+        fontWeight: "600",
+        fontSize: 18,
+        marginBottom: 12,
     },
     card: {
-      width: "90%",
-      padding: 20,
-      backgroundColor: "white",
-      borderRadius: 8,
-    },
-    content: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "rgba(0,0,0,0.5)",
+        width: "90%",
+        padding: 20,
+        backgroundColor: "white",
+        borderRadius: 8,
+        // Shadow properties for iOS
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.25,
+        shadowRadius: 30,
+        // Elevation for Android
+        elevation: 5,
     },
     text: {
-      fontWeight: "600",
-      fontSize: 16,
-      color: "white",
+        fontWeight: "600",
+        fontSize: 16,
+        color: "black",
     },
     button: {
-      width: "90%",
-      backgroundColor: "black",
-      justifyContent: "center",
-      alignItems: "center",
-      height: 56,
-      borderRadius: 8,
+        width: "90%",
+        backgroundColor: "black",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 56,
+        borderRadius: 8,
     },
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-  });
+});
