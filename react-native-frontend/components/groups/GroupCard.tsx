@@ -6,6 +6,7 @@ import * as Clipboard from 'expo-clipboard';
 import { colors } from "@/app/theme";
 import EmojiPicker from "./TimePopover";
 import MModal from "../modal/MModal";
+import SideButton from "../SideButton";
 
 interface Props {
     group: Group

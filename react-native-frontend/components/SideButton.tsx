@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet , TouchableOpacity, Animated, View} from 'react-native'
+import { StyleSheet , TouchableOpacity, Animated, View, GestureResponderEvent} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -9,8 +9,12 @@ import { FAB,  } from 'react-native-paper';
 function handlePress() {
     console.log('Pressed')
 }
-const SideButton = () => (
-    <TouchableOpacity style={styles.circle} onPress={handlePress}>
+
+interface Props {
+    onPress?: ((event: GestureResponderEvent) => void) 
+}
+const SideButton = ({onPress}: Props) => (
+    <TouchableOpacity style={styles.circle} onPress={onPress}>
             <Icon name="group" size={20} color="#FFFF"/>
     </TouchableOpacity>
 
