@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [username, setUsername] = useState<string | null>(null);
 
   function getIdFromName(name : string) {
-    
+    /*
     setUsername(name);
     fetch(`/api/getIdFromName/${name}`)
         .then(response => {
@@ -40,7 +40,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         })
         .catch(error => {
           console.error('Error fetching user ID:', error);
-        });
+        });*/
+        setUserId(25);
+        setUsername(name);
     
   }
   const login = async (user: string) => {
