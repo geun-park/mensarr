@@ -20,7 +20,8 @@ export const addGroup = async (groupName: string, userNames: string[]) => {
 
     await setDoc(doc(db, "Groups", id.toString()), {
         groupName: groupName,
-        userNames: userNames
+        userNames: userNames,
+        locations: []
       });
 }
 
